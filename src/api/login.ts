@@ -1,6 +1,10 @@
 import instance from "../http";
 
-// 注册
+/**
+ * 注册接口
+ * @param data 
+ * @returns 
+ */
 export const registerAPI = (data: any) => {
     const {
         account,
@@ -16,7 +20,11 @@ export const registerAPI = (data: any) => {
     })
 }
 
-// 登录
+/**
+ * 登录接口
+ * @param data 
+ * @returns
+ */
 export const loginAPI = (data: any) => {
     const {
         account,

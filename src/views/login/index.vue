@@ -5,6 +5,7 @@
       <el-col :span="16">
         <div class="login-content">
           <el-tabs v-model="activeName" class="demo-tabs" :stretch="true">
+            <!-- 登录 -->
             <el-tab-pane label="登录" name="login">
               <el-form :model="loginData" class="login-form">
                 <el-form-item>
@@ -15,8 +16,10 @@
                 </el-form-item>
                 <el-form-item>
                   <el-input
+                    type="password"
                     placeholder="请输入密码"
                     v-model="loginData.password"
+                    show-password
                   />
                 </el-form-item>
                 <!-- 忘记密码 -->
@@ -39,6 +42,7 @@
                 </div>
               </el-form>
             </el-tab-pane>
+            <!-- 注册 -->
             <el-tab-pane label="注册" name="register">
               <el-form :model="registerData" class="register-form">
                 <el-form-item>
@@ -49,12 +53,16 @@
                 </el-form-item>
                 <el-form-item>
                   <el-input
+                    type="password"
+                    show-password
                     placeholder="密码长度为6-12位含字母和数字"
                     v-model="registerData.password"
                   />
                 </el-form-item>
                 <el-form-item>
                   <el-input
+                    type="password"
+                    show-password
                     placeholder="请确认输入密码"
                     v-model="registerData.repassword"
                   />
@@ -81,16 +89,18 @@
 import { ref, reactive } from "vue";
 import { registerAPI, loginAPI } from "../../api/login";
 import forgetPassword from "./components/forget-password.vue";
-// 数据类型
 import type { loginForm } from "./type";
+import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
+const router = useRouter();
 const activeName = ref("login");
 // 登录表单数据
 const loginData: loginForm = reactive({
-  account: "",
-  password: "",
+  account: "1423747022",
+  password: "admin123",
 });
 // 注册表单数据
-const registerData: loginForm = reactive({
+let registerData: loginForm = reactive({
   account: "",
   password: "",
   repassword: "",
@@ -104,19 +114,41 @@ const forgerP = ref();
 const forPassword = () => {
   forgerP.value.open();
 };
+
 /**
  * 登录
  */
 const login = async () => {
   const res = await loginAPI(loginData);
-  console.log(res);
+  if (res.data.status == 0) {
+    ElMessage({
+      message: res.data.message,
+      type: "success",
+    });
+    router.push("/home");
+  } else {
+    ElMessage({
+      message: res.data.message,
+      type: "error",
+    });
+  }
 };
+
 /**
  * 注册
  */
 const register = async () => {
-  const res = await registerAPI(registerData);
-  console.log(res);
+  if (registerData.password === registerData.repassword) {
+    const res = await registerAPI(registerData);
+    if (res.data.message === "注册账号成功") {
+      ElMessage({
+        message: "注册成功",
+        type: "success",
+      });
+    }
+  } else {
+    ElMessage.error("二次密码输入不一致,请重新输入!");
+  }
 };
 </script>
 

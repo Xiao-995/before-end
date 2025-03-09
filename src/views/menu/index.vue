@@ -93,19 +93,27 @@
                 <el-dropdown-menu>
                   <el-dropdown-item>设置账号</el-dropdown-item>
                   <el-dropdown-item>更改头像</el-dropdown-item>
-                  <el-dropdown-item>退出登录</el-dropdown-item>
+                  <el-dropdown-item @click="goLogin">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
           </div>
         </el-header>
       </el-container>
-      <el-main><router-view></router-view></el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+const router = useRouter();
+const goLogin = () => {
+  router.push("/login");
+};
+</script>
 
 <style lang="scss" scoped>
 // 菜单栏

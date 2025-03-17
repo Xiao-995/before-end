@@ -5,7 +5,7 @@
         <el-menu class="el-menu-vertical-demo">
           <div class="title">通用后台管理系统</div>
           <!-- 首页 -->
-          <el-menu-item index="home">
+          <el-menu-item index="home" @click="goRoute">
             <el-icon><House /></el-icon>
             <span>首页</span>
           </el-menu-item>
@@ -71,7 +71,7 @@
             <span>登录日志</span>
           </el-menu-item>
           <!-- 系统设置 -->
-          <el-menu-item index="9">
+          <el-menu-item index="set" @click="goRoute">
             <el-icon><Setting /></el-icon>
             <span>系统设置</span>
           </el-menu-item>
@@ -99,9 +99,7 @@
             </el-dropdown>
           </div>
         </el-header>
-        <el-main>
-          <router-view></router-view>
-        </el-main>
+        <el-main> <router-view></router-view> </el-main>
       </el-container>
     </el-container>
   </div>
@@ -112,6 +110,10 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const goLogin = () => {
   router.push("/login");
+};
+const goRoute = (res: any) => {
+  router.push(res.index);
+  console.log(res);
 };
 </script>
 
@@ -168,5 +170,9 @@ const goLogin = () => {
     align-items: center;
     margin: 0 30px;
   }
+}
+// 主菜单
+.el-main {
+  padding: 0;
 }
 </style>

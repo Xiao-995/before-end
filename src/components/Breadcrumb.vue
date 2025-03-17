@@ -10,6 +10,7 @@
 </template>
 
 <script setup lang="ts">
+import SvgIcon from "./SvgIcon.vue";
 const props = defineProps(["item"]);
 </script>
 

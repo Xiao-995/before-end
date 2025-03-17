@@ -1,5 +1,7 @@
 <template>
-  <div><Breadcrumb ref="breadcrumb" :item="item" /></div>
+  <div>
+    <Breadcrumb ref="breadcrumb" :item="item" />
+  </div>
 </template>
 
 <script setup lang="ts">

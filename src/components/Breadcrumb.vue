@@ -1,17 +1,27 @@
 <template>
   <div class="bread-crumb">
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item> {{ props.item.first }}</el-breadcrumb-item>
-      <el-breadcrumb-item v-if="props.item.second">{{
-        props.item.second
-      }}</el-breadcrumb-item>
+      <el-breadcrumb-item
+        v-for="(item, index) in $route.matched"
+        :key="index"
+        :to="item.path"
+        v-show="item.meta.title"
+      >
+        <div class="breadcrumb">
+          <el-icon style="margin-right: 5px; color: #fff; margin-top: 1px">
+            <component :is="item.meta.icon"></component>
+          </el-icon>
+          <span style="color: aliceblue">{{ item.meta.title }}</span>
+        </div>
+      </el-breadcrumb-item>
     </el-breadcrumb>
   </div>
 </template>
 
 <script setup lang="ts">
-import SvgIcon from "./SvgIcon.vue";
-const props = defineProps(["item"]);
+import { useRoute } from "vue-router";
+const route = useRoute();
+console.log(route);
 </script>
 
 <style lang="scss" scoped>
@@ -20,6 +30,12 @@ const props = defineProps(["item"]);
   padding: 0 20px;
   display: flex;
   align-items: center;
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 :deep(.el-breadcrumb__item) {
   height: 30px;

@@ -1,5 +1,4 @@
 <template>
-  <Breadcrumb ref="breadcrumb" :item="item" />
   <div class="common-wrapped">
     <div class="common-content">
       <el-tabs v-model="activeName" class="demo-tabs">
@@ -99,7 +98,6 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import Breadcrumb from "../../components/Breadcrumb.vue";
 import { ElMessage } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
 import type { UploadProps } from "element-plus";
@@ -114,11 +112,7 @@ import ChangPassword from "./components/chang_password.vue";
 const UserInfoStore = useUserInfo();
 const ChangPasswordRef = ref();
 const id = localStorage.getItem("id");
-// 面包屑
-const breadcrumb = ref();
-const item = ref({
-  first: "系统设置",
-});
+
 const activeName = ref("first");
 // 修改密码弹窗
 const openChangePassword = () => {

@@ -130,6 +130,7 @@ const login = async () => {
       type: "success",
     });
     UserInfoStore.userInfo(id);
+    localStorage.setItem("id", id);
     router.push("/home");
   } else {
     ElMessage({

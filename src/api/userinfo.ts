@@ -50,13 +50,13 @@ export const changePasswordAPI = (id: any, oldPassword: string, newPassword: str
  * @param {*name *id}
  */
 
-export const changeNameAPI = (name: string, id: any) => {
+export const changeNameAPI = (id: any, name: any) => {
     return instance({
         url: "/api/user/changeName",
         method: "POST",
         data: {
-            name,
-            id
+            id,
+            name
         }
     })
 }
@@ -65,13 +65,13 @@ export const changeNameAPI = (name: string, id: any) => {
  * @param {*sex *id}
  */
 
-export const changeSexAPI = (sex: any, id: any) => {
+export const changeSexAPI = (id: any, sex: any) => {
     return instance({
         url: "/api/user/changeSex",
         method: "POST",
         data: {
-            sex,
-            id
+            id,
+            sex
         }
     })
 }
@@ -80,13 +80,13 @@ export const changeSexAPI = (sex: any, id: any) => {
  * @param {*email *id}
  */
 
-export const changeEmailAPI = (email: any, id: any) => {
+export const changeEmailAPI = (id: any, email: any) => {
     return instance({
         url: "/api/user/changeEmail",
         method: "POST",
         data: {
+            id,
             email,
-            id
         }
     })
 }

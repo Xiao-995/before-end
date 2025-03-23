@@ -35,7 +35,7 @@
           <div class="account-info-wrapped">
             <span>用户密码：</span>
             <div class="account-info-content">
-              <el-button v-model="UserInfoStore.password" type="primary"
+              <el-button type="primary" @click="openChangePassword"
                 >修改密码</el-button
               >
             </div>
@@ -45,7 +45,9 @@
             <span>用户姓名：</span>
             <div class="account-info-content">
               <el-input v-model="UserInfoStore.name"></el-input>
-              <el-button class="button" type="primary">保存</el-button>
+              <el-button class="button" type="primary" @click="saveName"
+                >保存</el-button
+              >
             </div>
           </div>
           <!-- 用户性别 -->
@@ -56,7 +58,9 @@
                 <el-option label="男" value="男" />
                 <el-option label="女" value="女" />
               </el-select>
-              <el-button class="button" type="primary">保存</el-button>
+              <el-button class="button" type="primary" @click="saveSex"
+                >保存</el-button
+              >
             </div>
           </div>
           <!-- 用户身份 -->
@@ -78,7 +82,9 @@
             <span>用户邮箱：</span>
             <div class="account-info-content">
               <el-input v-model="UserInfoStore.email"></el-input>
-              <el-button class="button" type="primary">保存</el-button>
+              <el-button class="button" type="primary" @click="saveEmail"
+                >保存</el-button
+              >
             </div>
           </div>
         </el-tab-pane>
@@ -88,34 +94,81 @@
       </el-tabs>
     </div>
   </div>
+  <chang-password ref="ChangPasswordRef" />
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import Breadcrumb from "../../components/Breadcrumb.vue";
 import { ElMessage } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
 import type { UploadProps } from "element-plus";
 import { useUserInfo } from "../../store/userinfo";
-import { bindAccountAPI } from "../../api/userinfo";
+import {
+  bindAccountAPI,
+  changeNameAPI,
+  changeEmailAPI,
+  changeSexAPI,
+} from "../../api/userinfo";
+import ChangPassword from "./components/chang_password.vue";
 const UserInfoStore = useUserInfo();
+const ChangPasswordRef = ref();
+const id = localStorage.getItem("id");
 // 面包屑
 const breadcrumb = ref();
 const item = ref({
   first: "系统设置",
 });
 const activeName = ref("first");
-// 账号详情
-const AccountDetail = reactive({
-  account: "", // 账号
-  password: "", // 密码
-  name: "", // 姓名
-  sex: "", // 性别
-  identity: "", // 身份
-  department: "", // 部门
-  email: "", // 邮箱
-});
-
+// 修改密码弹窗
+const openChangePassword = () => {
+  ChangPasswordRef.value.open();
+};
+// 修改姓名
+const saveName = async () => {
+  const res = await changeNameAPI(id, UserInfoStore.name);
+  if (res.data.status == 0) {
+    ElMessage({
+      message: "修改成功",
+      type: "success",
+    });
+  } else {
+    ElMessage({
+      message: "修改失败！",
+      type: "error",
+    });
+  }
+};
+// 修改性别
+const saveSex = async () => {
+  const res = await changeSexAPI(id, UserInfoStore.sex);
+  if (res.data.status == 0) {
+    ElMessage({
+      message: "修改成功",
+      type: "success",
+    });
+  } else {
+    ElMessage({
+      message: "修改失败！",
+      type: "error",
+    });
+  }
+};
+// 修改邮箱
+const saveEmail = async () => {
+  const res = await changeEmailAPI(id, UserInfoStore.email);
+  if (res.data.status == 0) {
+    ElMessage({
+      message: "修改成功",
+      type: "success",
+    });
+  } else {
+    ElMessage({
+      message: "修改失败！",
+      type: "error",
+    });
+  }
+};
 // 图片地址绑定账号
 const bindAccount = async (onlyid: any, account: any, url: any) => {
   await bindAccountAPI(onlyid, account, url);

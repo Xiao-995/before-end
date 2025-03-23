@@ -17,7 +17,7 @@
               >
                 <img
                   v-if="UserInfoStore.imageUrl"
-                  :src="UserInfoStore.imageUrl"
+                  :src="imageUrl"
                   class="avatar"
                 />
                 <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
@@ -28,14 +28,14 @@
           <div class="account-info-wrapped">
             <span>用户账号：</span>
             <div class="account-info-content">
-              <el-input v-model="UserInfoStore.account" disabled></el-input>
+              <el-input v-model="AccountDetail.account" disabled></el-input>
             </div>
           </div>
           <!-- 用户密码 -->
           <div class="account-info-wrapped">
             <span>用户密码：</span>
             <div class="account-info-content">
-              <el-button v-model="UserInfoStore.password" type="primary"
+              <el-button v-model="AccountDetail.password" type="primary"
                 >修改密码</el-button
               >
             </div>
@@ -44,7 +44,7 @@
           <div class="account-info-wrapped">
             <span>用户姓名：</span>
             <div class="account-info-content">
-              <el-input v-model="UserInfoStore.name"></el-input>
+              <el-input v-model="AccountDetail.name"></el-input>
               <el-button class="button" type="primary">保存</el-button>
             </div>
           </div>
@@ -52,7 +52,7 @@
           <div class="account-info-wrapped">
             <span>用户性别：</span>
             <div class="account-info-content">
-              <el-select v-model="UserInfoStore.sex" placeholder="请选择性别">
+              <el-select v-model="AccountDetail.sex" placeholder="请选择性别">
                 <el-option label="男" value="男" />
                 <el-option label="女" value="女" />
               </el-select>
@@ -63,21 +63,21 @@
           <div class="account-info-wrapped">
             <span>用户身份：</span>
             <div class="account-info-content">
-              <el-input v-model="UserInfoStore.identity" disabled></el-input>
+              <el-input v-model="AccountDetail.identity" disabled></el-input>
             </div>
           </div>
           <!-- 用户部门 -->
           <div class="account-info-wrapped">
             <span>用户部门：</span>
             <div class="account-info-content">
-              <el-input v-model="UserInfoStore.department" disabled></el-input>
+              <el-input v-model="AccountDetail.department" disabled></el-input>
             </div>
           </div>
           <!-- 用户邮箱 -->
           <div class="account-info-wrapped">
             <span>用户邮箱：</span>
             <div class="account-info-content">
-              <el-input v-model="UserInfoStore.email"></el-input>
+              <el-input v-model="AccountDetail.email"></el-input>
               <el-button class="button" type="primary">保存</el-button>
             </div>
           </div>
@@ -97,7 +97,6 @@ import { ElMessage } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
 import type { UploadProps } from "element-plus";
 import { useUserInfo } from "../../store/userinfo";
-import { bindAccountAPI } from "../../api/userinfo";
 const UserInfoStore = useUserInfo();
 // 面包屑
 const breadcrumb = ref();
@@ -116,10 +115,6 @@ const AccountDetail = reactive({
   email: "", // 邮箱
 });
 
-// 图片地址绑定账号
-const bindAccount = async (onlyid: any, account: any, url: any) => {
-  await bindAccountAPI(onlyid, account, url);
-};
 // 头像上传成功
 const handleAvatarSuccess: UploadProps["onSuccess"] = (response) => {
   if (response.status == 0) {
@@ -129,8 +124,7 @@ const handleAvatarSuccess: UploadProps["onSuccess"] = (response) => {
     ElMessage({
       message: "上传成功",
       type: "success",
-    }),
-      bindAccount(response.onlyId, UserInfoStore.account, response.url);
+    });
   } else {
     ElMessage({
       message: "更新头像失败，请重新上传",
@@ -170,7 +164,7 @@ const beforeAvatarUpload: UploadProps["beforeUpload"] = (rawFile) => {
       display: flex;
       align-items: center;
       padding-left: 40px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       // 内容
       .account-info-content {
         display: flex;

@@ -79,14 +79,15 @@
       </el-aside>
       <el-container>
         <el-header>
-          <span class="header-left-content"> 尊敬的李青 欢迎您登录本系统 </span>
+          <span class="header-left-content">
+            尊敬的 <span style="color: #bc00ff">{{ UserInfoStore.name }}</span>
+            欢迎您登录本系统
+          </span>
           <div class="header-right-content">
             <el-icon>
               <Message />
             </el-icon>
-            <el-avatar
-              src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-            />
+            <el-avatar :src="UserInfoStore.imageUrl" />
             <el-dropdown>
               <span class="el-dropdown-link"> 设置 </span>
               <template #dropdown>
@@ -107,6 +108,8 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
+import { useUserInfo } from "../../store/userinfo";
+const UserInfoStore = useUserInfo();
 const router = useRouter();
 const goLogin = () => {
   router.push("/login");

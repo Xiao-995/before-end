@@ -7,6 +7,7 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // svg配置代码
 import 'virtual:svg-icons-register'
+
 // pinia
 import pinia from '../src/store/index'
 const app = createApp(App)

@@ -10,8 +10,6 @@ export const useUserInfo = defineStore("userinfo", {
       sex: "",
       department: "",
       identity: "",
-      account: "",
-      email: "",
     };
   },
   // 逻辑
@@ -20,11 +18,10 @@ export const useUserInfo = defineStore("userinfo", {
     async userInfo(id: any) {
       const res = await getUserInfoAPI(id);
       const data = res.data;
-      this.account = data.account;
+      console.log(data);
       this.imageUrl = data.image_url;
       this.name = data.name;
       this.sex = data.sex;
-      this.email = data.email;
       this.department = data.department;
       this.identity = data.identity;
     },

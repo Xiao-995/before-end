@@ -13,5 +13,80 @@ export const getUserInfoAPI = (id: any) => {
             id
         }
     })
+}
+/**
+ * 用户头像地址绑定账号
+ * @param { *onlyid *account *url}
+ */
+export const bindAccountAPI = (onlyid: any, account: any, url: any) => {
+    return instance({
+        url: "/api/user/bindAccount",
+        method: "POST",
+        data: {
+            onlyid,
+            account,
+            url
+        }
+    })
+}
+/**
+ * 修改密码
+ * @param {*id *oldPassword *newPassword}
+ */
 
+export const changePasswordAPI = (id: any, oldPassword: string, newPassword: string) => {
+    return instance({
+        url: "/api/user/changePassword",
+        method: "POST",
+        data: {
+            id,
+            oldPassword,
+            newPassword
+        }
+    })
+}
+/**
+ * 修改姓名
+ * @param {*name *id}
+ */
+
+export const changeNameAPI = (name: string, id: any) => {
+    return instance({
+        url: "/api/user/changeName",
+        method: "POST",
+        data: {
+            name,
+            id
+        }
+    })
+}
+/**
+ * 修改性别
+ * @param {*sex *id}
+ */
+
+export const changeSexAPI = (sex: any, id: any) => {
+    return instance({
+        url: "/api/user/changeSex",
+        method: "POST",
+        data: {
+            sex,
+            id
+        }
+    })
+}
+/**
+ * 修改邮箱
+ * @param {*email *id}
+ */
+
+export const changeEmailAPI = (email: any, id: any) => {
+    return instance({
+        url: "/api/user/changeEmail",
+        method: "POST",
+        data: {
+            email,
+            id
+        }
+    })
 }

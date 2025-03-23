@@ -174,5 +174,6 @@ const goRoute = (res: any) => {
 // 主菜单
 .el-main {
   padding: 0;
+  background: #f6f5f5f3;
 }
 </style>

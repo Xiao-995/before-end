@@ -92,6 +92,9 @@ import forgetPassword from "./components/forget-password.vue";
 import type { loginForm } from "./type";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
+import { useUserInfo } from "../../store/userinfo";
+
+const UserInfoStore = useUserInfo();
 const router = useRouter();
 const activeName = ref("login");
 // 登录表单数据
@@ -120,11 +123,13 @@ const forPassword = () => {
  */
 const login = async () => {
   const res = await loginAPI(loginData);
+  const id = res.data.results.id;
   if (res.data.status == 0) {
     ElMessage({
       message: res.data.message,
       type: "success",
     });
+    UserInfoStore.userInfo(id);
     router.push("/home");
   } else {
     ElMessage({

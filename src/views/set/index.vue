@@ -201,11 +201,11 @@ const beforeAvatarUpload: UploadProps["beforeUpload"] = (rawFile) => {
 
 <style lang="scss" scoped>
 .common-wrapped {
-  margin: 0 15px;
+  margin: 10px 15px;
   padding: 8px;
   background: #fff;
   border-radius: 20px;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 90px);
 
   // 内容
   .common-content {

@@ -2,10 +2,12 @@
   <div class="account-info-wrapped">
     <span>公司名称：</span>
     <div class="account-info-content">
-      <el-input v-model="company"></el-input>
+      <el-input v-model="companyName"></el-input>
     </div>
     <div class="account-save-button">
-      <el-button type="primary">编辑公司名称</el-button>
+      <el-button type="primary" @click="resetCompanyName"
+        >修改公司名称</el-button
+      >
     </div>
   </div>
   <div class="account-info-wrapped">
@@ -36,16 +38,33 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import editor from "./components/editor.vue";
+import { getCompanyNameAPI, changeCompanyNameAPI } from "../../../api/stting";
 import { bus } from "@/utils/mitt.js";
+import { ElMessage } from "element-plus";
 // 公司名称输入框
-const company = ref();
+const companyName = ref();
 const editorRef = ref();
 const openEdiotr = (id: number) => {
   bus.emit("editorTitle", id);
   editorRef.value.open();
 };
+// 修改公司名称
+const resetCompanyName = () => {
+  changeCompanyNameAPI(companyName.value).then((res) => {
+    ElMessage({
+      type: "success",
+      message: res.data.message,
+    });
+  });
+};
+// 获取公司名称
+onMounted(() => {
+  getCompanyNameAPI().then((res) => {
+    companyName.value = res.data;
+  });
+});
 </script>
 
 <style lang="scss" scoped>

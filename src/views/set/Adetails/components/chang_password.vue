@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import { ref, reactive } from "vue";
-import { changePasswordAPI } from "../../../api/userinfo";
+import { changePasswordAPI } from "@/api/userinfo";
 import { ElMessage } from "element-plus";
 const passwordRef = ref();
 // 表单对象

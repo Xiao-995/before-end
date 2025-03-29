@@ -7,7 +7,6 @@
         class="avatar-uploader"
         action="http://127.0.0.1:3007/api/user/uploadAvatar"
         :show-file-list="false"
-        :data="testdata"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
       >
@@ -94,7 +93,7 @@ import {
   changeEmailAPI,
   changeSexAPI,
 } from "../../../api/userinfo";
-import ChangPassword from "../components/chang_password.vue";
+import ChangPassword from "../Adetails/components/chang_password.vue";
 const UserInfoStore = useUserInfo();
 const ChangPasswordRef = ref();
 const id = localStorage.getItem("id");

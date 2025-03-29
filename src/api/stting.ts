@@ -5,7 +5,7 @@ import instance from "../http";
  */
 export const getAllSwiperAPI = () => {
     return instance({
-        url: '/api/getAllSwiper',
+        url: '/api/user/getAllSwiper',
     })
 }
 
@@ -14,7 +14,7 @@ export const getAllSwiperAPI = () => {
  */
 export const getCompanyNameAPI = () => {
     return instance({
-        url: '/api/getCompanyName',
+        url: '/api/user/getCompanyName',
     })
 }
 
@@ -24,7 +24,7 @@ export const getCompanyNameAPI = () => {
  */
 export const changeCompanyNameAPI = (set_value: any) => {
     return instance({
-        url: '/api/changeCompanyName',
+        url: '/api/user/changeCompanyName',
         method: "post",
         data: {
             set_value
@@ -38,7 +38,7 @@ export const changeCompanyNameAPI = (set_value: any) => {
  */
 export const changeCompanyIntroduceAPI = (set_text: any, set_name: any) => {
     return instance({
-        url: '/api/changeCompanyIntroduce',
+        url: '/api/user/changeCompanyIntroduce',
         method: "post",
         data: {
             set_text,
@@ -54,7 +54,7 @@ export const changeCompanyIntroduceAPI = (set_text: any, set_name: any) => {
  */
 export const getCompanyIntroduceAPI = (set_name: any) => {
     return instance({
-        url: '/api/getCompanyIntroduce',
+        url: '/api/user/getCompanyIntroduce',
         method: "post",
         data: {
             set_name
@@ -67,7 +67,7 @@ export const getCompanyIntroduceAPI = (set_name: any) => {
  */
 export const getCompanyAllAPI = () => {
     return instance({
-        url: '/api/getCompanyAll',
+        url: '/api/user/getCompanyAll',
     })
 }
 

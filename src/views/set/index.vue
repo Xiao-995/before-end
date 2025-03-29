@@ -8,7 +8,9 @@
         <el-tab-pane label="公司信息" name="second">
           <Cinfo />
         </el-tab-pane>
-        <el-tab-pane label="首页管理" name="third">Role</el-tab-pane>
+        <el-tab-pane label="首页管理" name="third">
+          <Hintendant />
+        </el-tab-pane>
         <el-tab-pane label="其他设置" name="fourth">Task</el-tab-pane>
       </el-tabs>
     </div>
@@ -19,7 +21,8 @@
 import { ref } from "vue";
 import Adetails from "./Adetails/index.vue";
 import Cinfo from "./Cinfo/index.vue";
-const activeName = ref("second");
+import Hintendant from "./Hintendant/index.vue";
+const activeName = ref("third");
 </script>
 
 <style lang="scss" scoped>

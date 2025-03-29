@@ -97,7 +97,6 @@ import ChangPassword from "../Adetails/components/chang_password.vue";
 const UserInfoStore = useUserInfo();
 const ChangPasswordRef = ref();
 const id = localStorage.getItem("id");
-const testdata = ref("swiper1");
 // 修改密码弹窗
 const openChangePassword = () => {
   ChangPasswordRef.value.open();

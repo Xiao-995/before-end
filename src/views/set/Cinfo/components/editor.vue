@@ -99,45 +99,21 @@ const editorConfig = {
   },
 };
 // 上传图片，修改 uploadImage 菜单配置
-// 需要注意的是，如何去修改参数？
-toolbarConfig.excludeKeys = [
-  "blockquote",
-  "bgColor",
-  "color",
-  "group-more-style",
-  "fontFamily",
-  "bulletedList",
-  "numberedList",
-  "lineHeight",
-  "todo",
-  "emotion",
-  "insertLink",
-  "group-video",
-  "insertTable",
-  "codeBlock",
-  "divider",
-  "fullScreen",
-];
+
 // 点击确认 修改文案
-const yes = async () => {
-  // 去除 编辑两个字
-  console.log(title.value.slice(-4));
-  // 两个参数 set_text set_name
-  const res = await changeCompanyIntroduceAPI(
-    valueHtml.value,
-    title.value.slice(-4)
-  );
-  console.log(res);
-  if (res.status == 0) {
-    ElMessage({
-      message: "修改公司介绍成功！",
-      type: "success",
-    });
-    state.dialogFormVisible = false;
-  } else {
-    state.dialogFormVisible = false;
-    ElMessage.error("修改公司介绍失败，请检查网络是否通畅！");
-  }
+const yes = () => {
+  changeCompanyIntroduceAPI(valueHtml.value, title.value).then((res) => {
+    if (res.data.status == 0) {
+      ElMessage({
+        message: `修改${title.value}成功！`,
+        type: "success",
+      });
+      state.dialogFormVisible = false;
+    } else {
+      state.dialogFormVisible = false;
+      ElMessage.error("修改公司介绍失败，请检查网络是否通畅！");
+    }
+  });
 };
 
 // 组件销毁时，也及时销毁编辑器

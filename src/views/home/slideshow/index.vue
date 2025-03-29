@@ -1,19 +1,27 @@
 <template>
-  <el-carousel
-    :interval="4000"
-    height="240px"
-    motion-blur
-    indicator-position="outside"
-  >
-    <el-carousel-item v-for="item in 4" :key="item">
-      <h3 class="small justify-center" text="2xl">{{ item }}</h3>
+  <el-carousel :interval="4000" type="card" height="260px" motion-blur>
+    <el-carousel-item v-for="item in imageUrl" :key="item">
+      <img :src="item.set_value" alt="" />
     </el-carousel-item>
   </el-carousel>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { getAllSwiperAPI } from "../../../api/stting";
+const imageUrl = ref();
+onMounted(() => {
+  getAllSwiperAPI().then((res) => {
+    imageUrl.value = res.data.result;
+  });
+});
+</script>
 
 <style lang="scss" scoped>
+img {
+  width: 100%;
+  height: 100%;
+}
 .demonstration {
   color: var(--el-text-color-secondary);
 }

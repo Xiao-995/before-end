@@ -50,14 +50,11 @@ export const changePasswordAPI = (id: any, oldPassword: string, newPassword: str
  * @param {*name *id}
  */
 
-export const changeNameAPI = (id: any, name: any) => {
+export const changeNameAPI = (data: {}) => {
     return instance({
         url: "/api/user/changeName",
         method: "POST",
-        data: {
-            id,
-            name
-        }
+        data
     })
 }
 /**

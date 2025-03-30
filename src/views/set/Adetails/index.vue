@@ -96,14 +96,17 @@ import {
 import ChangPassword from "../Adetails/components/chang_password.vue";
 const UserInfoStore = useUserInfo();
 const ChangPasswordRef = ref();
-const id = localStorage.getItem("id");
 // 修改密码弹窗
 const openChangePassword = () => {
   ChangPasswordRef.value.open();
 };
 // 修改姓名
 const saveName = async () => {
-  const res = await changeNameAPI(id, UserInfoStore.name);
+  const data = {
+    id: localStorage.getItem("id"),
+    name: UserInfoStore.name,
+  };
+  const res = await changeNameAPI(data);
   if (res.data.status == 0) {
     ElMessage({
       message: "修改成功",
@@ -118,7 +121,7 @@ const saveName = async () => {
 };
 // 修改性别
 const saveSex = async () => {
-  const res = await changeSexAPI(id, UserInfoStore.sex);
+  const res = await changeSexAPI(localStorage.getItem("id"), UserInfoStore.sex);
   if (res.data.status == 0) {
     ElMessage({
       message: "修改成功",

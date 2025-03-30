@@ -49,4 +49,24 @@ export const constantRoute = [
 
         ]
     },
+    // 系统概览
+    {
+        path: '/overview',
+        name: "overview",
+        component: () => import('../layout/index.vue'),
+        redirect: '/over',
+        children: [
+            {
+                path: '/over',
+                name: "over",
+                component: () => import('../views/overview/index.vue'),
+                meta: {
+                    title: '系统概览',
+                    icon: 'Document'
+                }
+            },
+
+        ]
+    },
+
 ]

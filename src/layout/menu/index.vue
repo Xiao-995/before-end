@@ -12,7 +12,7 @@
         <span>首页</span>
       </el-menu-item>
       <!-- 系统概论 -->
-      <el-menu-item index="2">
+      <el-menu-item index="/over" @click="goRoute">
         <el-icon><Document /></el-icon>
         <span>系统概论</span>
       </el-menu-item>

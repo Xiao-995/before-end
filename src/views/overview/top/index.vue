@@ -19,13 +19,65 @@
       <p>权限：沥青</p>
     </div>
   </div>
-  <div class="manage-user pie"></div>
+  <div class="pie" ref="Users"></div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import * as echarts from "echarts";
 import { useUserInfo } from "../../../store/userinfo";
 const userInfo = useUserInfo();
+const Users = ref();
+// 管理员与用户比值图
+const manageUser = () => {
+  // 通过类名 初始化
+  let myChart = echarts.init(Users.value);
+  // 设置基本的参数
+  myChart.setOption({
+    title: {
+      text: "管理与用户对比图",
+      // subtext: 'Fake Data',
+      left: "center",
+    },
+    tooltip: {
+      trigger: "item",
+    },
+    legend: {
+      orient: "vertical",
+      left: "left",
+      padding: [20, 20, 20, 20],
+    },
+    series: [
+      {
+        // name: 'Access From',
+        type: "pie",
+        radius: "65%",
+        data: [
+          { value: 1048, name: "Search Engine" },
+          { value: 735, name: "Direct" },
+          { value: 580, name: "Email" },
+          { value: 484, name: "Union Ads" },
+          { value: 300, name: "Video Ads" },
+        ],
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: "rgba(0, 0, 0, 0.5)",
+          },
+        },
+      },
+    ],
+  });
+  // 用于echarts响应式
+  window.addEventListener("resize", function () {
+    myChart.resize();
+  });
+};
+
+onMounted(() => {
+  manageUser();
+});
 </script>
 
 <style lang="scss" scoped>

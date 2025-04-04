@@ -1,11 +1,11 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="`添加${title}`" width="450px">
+  <el-dialog v-model="dialogFormVisible" :title="title" width="450px">
     <div class="dialog-content">
       <el-form :model="FormData" :rules="rules" label-position="top">
         <el-form-item label="账号" prop="account">
-          <el-input v-model="FormData.account"></el-input>
+          <el-input v-model="FormData.account" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
+        <el-form-item label="密码" prop="password" v-if="!disabled">
           <el-input v-model="FormData.password"></el-input>
         </el-form-item>
         <el-form-item label="姓名" prop="name">
@@ -13,8 +13,8 @@
         </el-form-item>
         <el-form-item label="性别" prop="sex">
           <el-select v-model="FormData.sex" placeholder="请选择性别">
-            <el-option label="男" value="man"></el-option>
-            <el-option label="女" value="woman"></el-option>
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
@@ -29,7 +29,7 @@
       </el-form>
     </div>
     <template #footer>
-      <el-button type="primary">保存</el-button>
+      <el-button type="primary" @click="saveAdmin">保存</el-button>
       <el-button>取消</el-button>
     </template>
   </el-dialog>
@@ -37,79 +37,73 @@
 
 <script setup lang="ts">
 import { reactive, ref } from "vue";
+import { createAdminAPI, editAdminAPI } from "../../../api/userinfo";
+import { ElMessage } from "element-plus";
 const dialogFormVisible = ref(false);
-interface formData {
-  account: string;
-  password: string;
-  name: string;
-  sex: string;
-  email: string;
-  department: string;
-}
-const FormData: formData = reactive({
+// 状态
+const state = ref();
+
+let FormData = reactive({
   account: "",
   password: "",
   name: "",
   sex: "",
   email: "",
   department: "",
+  identity: "产品管理员",
 });
-
+const disabled = ref(false);
+const title = ref();
 const rules = reactive({
-  account: [
-    {
-      required: true,
-      message: "请输入账号",
-      trigger: "blur",
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: "请输入密码",
-      trigger: "blur",
-    },
-  ],
-  name: [
-    {
-      required: true,
-      message: "请输入姓名",
-      trigger: "blur",
-    },
-  ],
-  sex: [
-    {
-      required: true,
-      message: "请选择性别",
-      trigger: "blur",
-    },
-  ],
-  email: [
-    {
-      required: true,
-      message: "请输入邮箱",
-      trigger: "blur",
-    },
-  ],
-  department: [
-    {
-      required: true,
-      message: "请选择部门",
-      trigger: "blur",
-    },
-  ],
+  account: [{ required: true, message: "请输入账号", trigger: "blur" }],
+  password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+  name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+  sex: [{ required: true, message: "请选择性别", trigger: "blur" }],
+  email: [{ required: true, message: "请输入邮箱", trigger: "blur" }],
+  department: [{ required: true, message: "请选择部门", trigger: "blur" }],
 });
 // 弹窗开关
-const openDialog = () => {
-  dialogFormVisible.value = true;
-  console.log("111");
+const openDialog = (
+  titles: string,
+  disableds: any,
+  row: any,
+  states: string
+) => {
+  dialogFormVisible.value = true; // 弹窗
+  disabled.value = disableds; // 账号密码判定
+  title.value = titles; // 标题
+  FormData = row; // 表单数据
+  state.value = states; // 状态
 };
-defineProps({
-  title: {
-    type: String,
-    default: "",
-  },
-});
+// 保存
+const saveAdmin = () => {
+  if (state.value == "新增") {
+    createAdminAPI(FormData).then((res) => {
+      if (res.data.status == 1) {
+        ElMessage({
+          type: "error",
+          message: res.data.message,
+        });
+      } else {
+        ElMessage({
+          type: "success",
+          message: "添加成功！",
+        });
+        dialogFormVisible.value = false;
+      }
+    });
+  }
+  if (state.value == "编辑") {
+    editAdminAPI(FormData).then((res) => {
+      ElMessage({
+        type: "success",
+        message: res.data.message,
+      });
+    });
+    dialogFormVisible.value = false;
+  }
+};
+
 defineExpose({
   openDialog,
 });

@@ -111,7 +111,7 @@ export const createAdminAPI = (data: any) => {
  * 获取管理员列表
  * @param {*identity }
  */
-export const getAdminListAPI = (identity: any) => {
+export const getAdminListAPI = (identity: string) => {
     return instance({
         url: "/api/user/getAdminList",
         method: "POST",
@@ -131,7 +131,7 @@ export const editAdminAPI = (data: any) => {
         ...department
     } = data
     return instance({
-        url: "/api/user/getAdminList",
+        url: "/api/user/editAdmin",
         method: "POST",
         data: {
             id,

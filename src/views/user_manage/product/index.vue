@@ -11,7 +11,9 @@
           />
         </div>
         <div class="button">
-          <el-button type="primary">添加产品管理员</el-button>
+          <el-button type="primary" @click="addProduct"
+            >添加产品管理员</el-button
+          >
         </div>
       </div>
       <div class="table-content">
@@ -34,17 +36,23 @@
       <el-pagination background layout="prev, pager, next" :total="1000" />
     </div>
   </div>
+  <create-admin ref="CreateAdminRef" title="产品管理员"></create-admin>
 </template>
 
 <script setup lang="ts">
 import { Search } from "@element-plus/icons-vue";
+import CreateAdmin from "../components/create_admin.vue";
 import { ref } from "vue";
 const search = ref();
+const CreateAdminRef = ref();
 const tableData = ref([
   {
     id: 1,
   },
 ]);
+const addProduct = () => {
+  CreateAdminRef.value.openDialog();
+};
 </script>
 
 <style lang="scss" scoped>

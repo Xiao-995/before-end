@@ -39,6 +39,7 @@
 import { reactive, ref } from "vue";
 import { createAdminAPI, editAdminAPI } from "../../../api/userinfo";
 import { ElMessage } from "element-plus";
+const $emit = defineEmits(["getAdminList"]);
 const dialogFormVisible = ref(false);
 // 状态
 const state = ref();
@@ -102,6 +103,7 @@ const saveAdmin = () => {
     });
     dialogFormVisible.value = false;
   }
+  $emit("getAdminList");
 };
 
 defineExpose({

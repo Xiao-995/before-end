@@ -26,7 +26,9 @@
           <el-table-column label="操作">
             <template #default="{ row }">
               <el-button type="primary" @click="edit(row)">编辑</el-button>
-              <el-button type="danger">删除</el-button>
+              <el-button type="danger" @click="deleteAdmin(row)"
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -36,14 +38,18 @@
       <el-pagination background layout="prev, pager, next" :total="1000" />
     </div>
   </div>
-  <create-admin ref="CreateAdminRef"></create-admin>
+  <create-admin
+    ref="CreateAdminRef"
+    @getAdminList="getAdminList"
+  ></create-admin>
 </template>
 
 <script setup lang="ts">
 import { Search } from "@element-plus/icons-vue";
 import CreateAdmin from "../components/create_admin.vue";
-import { getAdminListAPI } from "../../../api/userinfo";
+import { getAdminListAPI, deleteUserAPI } from "../../../api/userinfo";
 import { ref, onMounted, reactive } from "vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 const search = ref();
 const CreateAdminRef = ref();
 const tableData = ref([]);
@@ -74,9 +80,26 @@ const edit = (row: any) => {
 };
 // 获取管理员列表
 const getAdminList = () => {
-  const identity = "用户";
+  const identity = "产品管理员";
   getAdminListAPI(identity).then((res) => {
     tableData.value = res.data;
+  });
+};
+// 删除用户
+const deleteAdmin = (row: any) => {
+  ElMessageBox.confirm("是否确认删除？", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  }).then(() => {
+    deleteUserAPI(row.id, row.account).then((res) => {
+      console.log(res);
+      ElMessage({
+        type: "success",
+        message: "删除成功",
+      });
+      getAdminList();
+    });
   });
 };
 onMounted(() => {

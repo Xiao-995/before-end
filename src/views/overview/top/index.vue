@@ -12,22 +12,45 @@
     </div>
     <!-- 详情 -->
     <div class="detail-infor-wrapped">
-      <p>姓名：沥青</p>
-      <p>性别：沥青</p>
-      <p>身份：沥青</p>
-      <p>分管领域：沥青</p>
-      <p>权限：沥青</p>
+      <p>姓名：{{ userData.name }}</p>
+      <p>性别：{{ userData.sex }}</p>
+      <p>身份：{{ userData.identity }}</p>
+      <p>分管领域：{{ userData.department }}</p>
+      <p>邮箱：{{ userData.email }}</p>
     </div>
   </div>
   <div class="pie" ref="Users"></div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import * as echarts from "echarts";
+import { getUserInfoAPI } from "../../../api/userinfo";
 import { useUserInfo } from "../../../store/userinfo";
 const userInfo = useUserInfo();
 const Users = ref();
+interface userData {
+  name: string;
+  sex: string;
+  identity: string;
+  department: string;
+  email: string;
+}
+let userData: userData = reactive({
+  name: "",
+  sex: "",
+  identity: "",
+  department: "",
+  email: "",
+});
+//获取用户信息
+const getUserInfo = () => {
+  getUserInfoAPI(localStorage.getItem("id")).then((res) => {
+    console.log(res.data);
+
+    userData = res.data;
+  });
+};
 // 管理员与用户比值图
 const manageUser = () => {
   // 通过类名 初始化
@@ -77,6 +100,7 @@ const manageUser = () => {
 
 onMounted(() => {
   manageUser();
+  getUserInfo();
 });
 </script>
 

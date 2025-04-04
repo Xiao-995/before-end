@@ -87,3 +87,124 @@ export const changeEmailAPI = (id: any, email: any) => {
         }
     })
 }
+
+// -------------用户管理-------------
+/**
+ * 添加管理员
+ * @param {*data{} }
+ */
+export const createAdminAPI = (data: any) => {
+    // ES6--rest参数,（形式...变量名）：将多余的参数放入数组中
+    const {
+        account, ...identity
+    } = data
+    return instance({
+        url: "/api/user/createAdmin",
+        method: "POST",
+        data: {
+            account,
+            ...identity
+        }
+    })
+}
+/**
+ * 获取管理员列表
+ * @param {*identity }
+ */
+export const getAdminListAPI = (identity: any) => {
+    return instance({
+        url: "/api/user/getAdminList",
+        method: "POST",
+        data: {
+            identity
+        }
+    })
+}
+
+/**
+ * 修改管理员账号信息
+ * @param {*identity }
+ */
+export const editAdminAPI = (data: any) => {
+    const {
+        id,
+        ...department
+    } = data
+    return instance({
+        url: "/api/user/getAdminList",
+        method: "POST",
+        data: {
+            id,
+            ...department
+        }
+    })
+}
+
+// 降级管理员为用户
+export const changeIdentityToUserAPI = (id: string, identity: string) => {
+    return instance({
+        url: "/api/user/changeIdentityToUser",
+        method: "POST",
+        data: {
+            id, identity
+        }
+    })
+}
+// 升级管理员
+export const changeIdentityToAdminAPI = () => {
+    return instance({
+        url: "/api/user/changeIdentityToAdmin",
+        method: "POST",
+        data: {
+
+        }
+    })
+}
+// 搜索用户
+export const searchUserAPI = (account: string) => {
+    return instance({
+        url: "/api/user/searchUser",
+        method: "POST",
+        data: {
+            account
+        }
+    })
+}
+// 冻结用户
+export const banUserAPI = (id: string) => {
+    return instance({
+        url: "/api/user/banUser",
+        method: "POST",
+        data: {
+            id
+        }
+    })
+}
+// 解冻用户
+export const hotUserAPI = () => {
+    return instance({
+        url: "/api/user/hotUser",
+        method: "POST",
+        data: {
+
+        }
+    })
+}
+// 获取冻结用户列表
+export const getBanUsersAPI = () => {
+    return instance({
+        url: "/api/user/getBanUsers",
+        method: "POST",
+    })
+}
+// 删除用户
+export const deleteUserAPI = (id: string, account: string) => {
+    return instance({
+        url: "/api/user/deleteUser",
+        method: "POST",
+        data: {
+            id,
+            account
+        }
+    })
+}

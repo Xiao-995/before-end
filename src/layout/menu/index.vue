@@ -23,12 +23,18 @@
           <span>用户管理员</span>
         </template>
         <el-menu-item-group title="管理员管理">
-          <el-menu-item index="3-1">产品管理员</el-menu-item>
-          <el-menu-item index="3-2">消息管理员</el-menu-item>
-          <el-menu-item index="3-3">用户管理员</el-menu-item>
+          <el-menu-item index="/product" @click="goRoute"
+            >产品管理员</el-menu-item
+          >
+          <el-menu-item index="/message" @click="goRoute"
+            >消息管理员</el-menu-item
+          >
+          <el-menu-item index="/user" @click="goRoute">用户管理员</el-menu-item>
         </el-menu-item-group>
         <el-menu-item-group title="员工管理">
-          <el-menu-item index="3-4">用户列表</el-menu-item>
+          <el-menu-item index="/userlist" @click="goRoute"
+            >用户列表</el-menu-item
+          >
         </el-menu-item-group>
       </el-sub-menu>
       <!-- 产品管理 -->

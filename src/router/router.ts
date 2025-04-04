@@ -68,5 +68,49 @@ export const constantRoute = [
 
         ]
     },
-
+    // 用户管理
+    {
+        path: "/user_manage",
+        name: "user_manage",
+        component: () => import('../layout/index.vue'),
+        redirect: '/product',
+        children: [
+            {
+                path: '/product',
+                name: "product",
+                component: () => import('../views/user_manage/product/index.vue'),
+                meta: {
+                    title: '产品管理',
+                    icon: 'Document'
+                }
+            },
+            {
+                path: '/message',
+                name: "message",
+                component: () => import('../views/user_manage/message/index.vue'),
+                meta: {
+                    title: '消息管理',
+                    icon: 'Document'
+                }
+            },
+            {
+                path: '/user',
+                name: "user",
+                component: () => import('../views/user_manage/user/index.vue'),
+                meta: {
+                    title: '用户管理',
+                    icon: 'Document'
+                }
+            },
+            {
+                path: '/userlist',
+                name: "userlist",
+                component: () => import('../views/user_manage/userlist/index.vue'),
+                meta: {
+                    title: '用户列表',
+                    icon: 'Document'
+                }
+            },
+        ]
+    }
 ]

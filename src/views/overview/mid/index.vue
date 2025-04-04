@@ -1,13 +1,73 @@
 <template>
   <div class="mid-content-left" ref="leftEcharts"></div>
-  <div class="mid-content-right" ref="rightEcharts"></div>
+  <div class="mid-content-right" ref="rightEcharts">
+    <div class="title">常用管理</div>
+    <el-row :gutter="20">
+      <el-col :span="6">
+        <div class="button-area">
+          <SvgIcon
+            icon-name="phone"
+            style="width: 30px; height: 30px"
+          ></SvgIcon>
+          <span class="button">用户管理</span>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="button-area">
+          <SvgIcon
+            icon-name="phone"
+            style="width: 30px; height: 30px"
+          ></SvgIcon>
+          <span class="button">产品管理</span>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="button-area">
+          <SvgIcon
+            icon-name="phone"
+            style="width: 30px; height: 30px"
+          ></SvgIcon>
+          <span class="button">系统信息</span>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="button-area">
+          <SvgIcon
+            icon-name="phone"
+            style="width: 30px; height: 30px"
+          ></SvgIcon>
+          <span class="button">个人消息</span>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="button-area">
+          <SvgIcon
+            icon-name="phone"
+            style="width: 30px; height: 30px"
+          ></SvgIcon>
+          <span class="button">部门消息</span>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="button-area">
+          <SvgIcon
+            icon-name="phone"
+            style="width: 30px; height: 30px"
+          ></SvgIcon>
+          <span class="button">系统设置</span>
+        </div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import SvgIcon from "../../../components/SvgIcon.vue";
+import { onMounted, reactive, ref } from "vue";
 import * as echarts from "echarts";
 const leftEcharts = ref();
 const rightEcharts = ref();
+
 // 产品类别图
 const productCategoryBar = async () => {
   let myChart = echarts.init(leftEcharts.value);
@@ -72,7 +132,7 @@ onMounted(() => {
   // 按钮区域
   .button-area {
     margin-bottom: 8px;
-    height: 100px;
+    padding: 13px;
     display: flex;
     flex-direction: column;
     justify-content: center;

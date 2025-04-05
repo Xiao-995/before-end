@@ -120,6 +120,29 @@ export const getAdminListAPI = (identity: string) => {
         }
     })
 }
+/**
+ * 根据部门搜索
+ * @param {*department }
+ */
+export const getDepartmentListAPI = (department: string) => {
+    return instance({
+        url: "/api/user/getDepartmentList",
+        method: "POST",
+        data: {
+            department
+        }
+    })
+}
+/**
+ * 获取所有用户列表
+ * @param {*identity }
+ */
+export const getUserListAPI = () => {
+    return instance({
+        url: "/api/user/getUserList",
+        method: "POST",
+    })
+}
 
 /**
  * 修改管理员账号信息
@@ -171,7 +194,7 @@ export const searchUserAPI = (account: string) => {
     })
 }
 // 冻结用户
-export const banUserAPI = (id: string) => {
+export const banUserAPI = (id: number) => {
     return instance({
         url: "/api/user/banUser",
         method: "POST",
@@ -181,12 +204,12 @@ export const banUserAPI = (id: string) => {
     })
 }
 // 解冻用户
-export const hotUserAPI = () => {
+export const hotUserAPI = (id: number) => {
     return instance({
         url: "/api/user/hotUser",
         method: "POST",
         data: {
-
+            id
         }
     })
 }

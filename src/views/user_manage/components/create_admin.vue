@@ -45,7 +45,7 @@ import { createAdminAPI, editAdminAPI } from "../../../api/userinfo";
 import { getDepartmentAPI } from "../../../api/stting";
 
 import { ElMessage } from "element-plus";
-const $emit = defineEmits(["getAdminList"]);
+const $emit = defineEmits(["getFirstPageList"]);
 const dialogFormVisible = ref(false);
 // 状态
 const state = ref();
@@ -109,7 +109,7 @@ const saveAdmin = () => {
     });
     dialogFormVisible.value = false;
   }
-  $emit("getAdminList");
+  $emit("getFirstPageList");
 };
 // 获取部门
 const departmentData = ref([]);

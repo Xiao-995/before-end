@@ -37,12 +37,20 @@
       </div>
     </div>
     <div class="table-footer">
-      <el-pagination background layout="prev, pager, next" :total="1000" />
+      <el-pagination
+        background
+        :page-size="1"
+        :pager-count="5"
+        :total="paginationData.total"
+        :page-count="paginationData.pageCount"
+        v-model="paginationData.currenPage"
+        @current-change="currentChange"
+      />
     </div>
   </div>
   <create-admin
     ref="CreateAdminRef"
-    @getAdminList="getAdminList"
+    @getFirstPageList="getFirstPageList"
   ></create-admin>
 </template>
 
@@ -50,15 +58,18 @@
 import { Search } from "@element-plus/icons-vue";
 import CreateAdmin from "../components/create_admin.vue";
 import {
-  getAdminListAPI,
   deleteUserAPI,
   searchUserAPI,
+  getListDataAPI,
+  getAdminListAPI,
+  getAdminListLengthAPI,
 } from "../../../api/userinfo";
 import { ref, onMounted, reactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 const searchAccount = ref();
 const CreateAdminRef = ref();
 const tableData = ref([]);
+
 interface formData {
   account: string;
   password: string;
@@ -76,7 +87,7 @@ const addProduct = () => {
     sex: "",
     email: "",
     department: "",
-    identity: "产品管理员",
+    identity: "消息管理员",
   });
   CreateAdminRef.value.openDialog("新增消息管理员", false, row, "新增");
 };
@@ -86,10 +97,11 @@ const edit = (row: any) => {
 };
 // 获取管理员列表
 const getAdminList = () => {
-  const identity = "产品管理员";
+  const identity = "消息管理员";
   getAdminListAPI(identity).then((res) => {
     tableData.value = res.data;
   });
+  getAdminListLength();
 };
 // 删除用户
 const deleteAdmin = (row: any) => {
@@ -119,8 +131,41 @@ const searchAdmin = () => {
     });
   }
 };
+
+// 分页
+const paginationData = reactive({
+  // 总页数
+  pageCount: 100,
+  // 当前页数
+  currenPage: 2,
+  // 总数
+  total: 0,
+});
+
+// 获取用户长度
+const getAdminListLength = () => {
+  getAdminListLengthAPI("消息管理员").then((res) => {
+    paginationData.total = res.data.length;
+    paginationData.pageCount = Math.ceil(res.data.length / 1);
+  });
+};
+
+// 获取第一页数据
+const getFirstPageList = () => {
+  getListDataAPI(0, "消息管理员").then((res) => {
+    tableData.value = res.data;
+  });
+};
+// 监听换页
+const currentChange = (value: any) => {
+  getListDataAPI(value - 1, "消息管理员").then((res) => {
+    tableData.value = res.data;
+  });
+};
 onMounted(() => {
   getAdminList();
+  getAdminListLength();
+  getFirstPageList();
 });
 </script>
 

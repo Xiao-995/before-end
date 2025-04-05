@@ -20,7 +20,7 @@
       <el-sub-menu index="3">
         <template #title>
           <el-icon><User /></el-icon>
-          <span>用户管理员</span>
+          <span>用户管理</span>
         </template>
         <el-menu-item-group title="管理员管理">
           <el-menu-item index="/product" @click="goRoute"

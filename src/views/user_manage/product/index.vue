@@ -50,7 +50,7 @@
   </div>
   <create-admin
     ref="CreateAdminRef"
-    @getAdminList="getAdminList"
+    @getFirstPageList="getFirstPageList"
   ></create-admin>
 </template>
 
@@ -97,10 +97,10 @@ const edit = (row: any) => {
 };
 // 获取管理员列表
 const getAdminList = () => {
-  /* const identity = "产品管理员";
+  const identity = "产品管理员";
   getAdminListAPI(identity).then((res) => {
     tableData.value = res.data;
-  }); */
+  });
   getAdminListLength();
 };
 // 删除用户
@@ -111,7 +111,6 @@ const deleteAdmin = (row: any) => {
     type: "warning",
   }).then(() => {
     deleteUserAPI(row.id, row.account).then((res) => {
-      console.log(res);
       ElMessage({
         type: "success",
         message: "删除成功",
@@ -157,7 +156,7 @@ const getFirstPageList = () => {
   });
 };
 // 监听换页
-const currentChange = (value) => {
+const currentChange = (value: any) => {
   getListDataAPI(value - 1, "产品管理员").then((res) => {
     tableData.value = res.data;
   });

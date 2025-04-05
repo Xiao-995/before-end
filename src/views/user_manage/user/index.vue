@@ -12,47 +12,45 @@
           />
         </div>
         <div class="button">
-          <el-button type="primary" @click="showAllUser">显示全部用户</el-button
-          ><el-button type="warning" @click="showBanUser"
-            >显示冻结用户</el-button
+          <el-button type="primary" @click="addProduct"
+            >添加用户管理员</el-button
           >
         </div>
       </div>
       <div class="table-content">
         <el-table :data="tableData" style="width: 100%">
-          <el-table-column label="序号" type="index" width="70px" />
+          <el-table-column label="序号" type="index" width="100px" />
           <el-table-column prop="account" label="账号" />
           <el-table-column prop="name" label="姓名" />
-          <el-table-column prop="sex" label="性别" width="70px" />
-          <el-table-column prop="identity" label="身份" />
+          <el-table-column prop="sex" label="性别" />
           <el-table-column prop="department" label="部门" />
           <el-table-column prop="email" label="邮箱" />
-          <el-table-column prop="status" label="状态" width="70px">
-            <template #default="{ row }">
-              <div>
-                <el-tag type="error" v-if="row.status == 1">冻结</el-tag>
-                <el-tag type="success" v-else>正常</el-tag>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="create_time" label="创建时间" />
           <el-table-column label="操作">
             <template #default="{ row }">
-              <el-button type="success" @click="hot(row)">解冻</el-button>
-
-              <el-button type="warning" @click="ban(row)">冻结</el-button>
+              <el-button type="primary" @click="edit(row)">编辑</el-button>
+              <el-button type="danger" @click="deleteAdmin(row)"
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
       </div>
     </div>
     <div class="table-footer">
-      <el-pagination background layout="prev, pager, next" :total="1000" />
+      <el-pagination
+        background
+        :page-size="1"
+        :pager-count="5"
+        :total="paginationData.total"
+        :page-count="paginationData.pageCount"
+        v-model="paginationData.currenPage"
+        @current-change="currentChange"
+      />
     </div>
   </div>
   <create-admin
     ref="CreateAdminRef"
-    @getAdminList="getAdminList"
+    @getFirstPageList="getFirstPageList"
   ></create-admin>
 </template>
 
@@ -63,6 +61,8 @@ import {
   getAdminListAPI,
   deleteUserAPI,
   searchUserAPI,
+  getListDataAPI,
+  getAdminListLengthAPI,
 } from "../../../api/userinfo";
 import { ref, onMounted, reactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -70,11 +70,54 @@ const searchAccount = ref();
 const CreateAdminRef = ref();
 const tableData = ref([]);
 
+interface formData {
+  account: string;
+  password: string;
+  name: string;
+  sex: string;
+  email: string;
+  department: string;
+}
+// 添加管理员
+const addProduct = () => {
+  const row: formData = reactive({
+    account: "",
+    password: "",
+    name: "",
+    sex: "",
+    email: "",
+    department: "",
+    identity: "用户管理员",
+  });
+  CreateAdminRef.value.openDialog("新增用户管理员", false, row, "新增");
+};
+// 编辑用户信息
+const edit = (row: any) => {
+  CreateAdminRef.value.openDialog("编辑用户管理员", true, row, "编辑");
+};
 // 获取管理员列表
 const getAdminList = () => {
-  const identity = "产品管理员";
+  const identity = "用户管理员";
   getAdminListAPI(identity).then((res) => {
     tableData.value = res.data;
+  });
+  getAdminListLength();
+};
+// 删除用户
+const deleteAdmin = (row: any) => {
+  ElMessageBox.confirm("是否确认删除？", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  }).then(() => {
+    deleteUserAPI(row.id, row.account).then((res) => {
+      console.log(res);
+      ElMessage({
+        type: "success",
+        message: "删除成功",
+      });
+      getAdminList();
+    });
   });
 };
 
@@ -88,8 +131,41 @@ const searchAdmin = () => {
     });
   }
 };
+
+// 分页
+const paginationData = reactive({
+  // 总页数
+  pageCount: 100,
+  // 当前页数
+  currenPage: 2,
+  // 总数
+  total: 0,
+});
+
+// 获取用户长度
+const getAdminListLength = () => {
+  getAdminListLengthAPI("用户管理员").then((res) => {
+    paginationData.total = res.data.length;
+    paginationData.pageCount = Math.ceil(res.data.length / 1);
+  });
+};
+
+// 获取第一页数据
+const getFirstPageList = () => {
+  getListDataAPI(0, "用户管理员").then((res) => {
+    tableData.value = res.data;
+  });
+};
+// 监听换页
+const currentChange = (value: any) => {
+  getListDataAPI(value - 1, "用户管理员").then((res) => {
+    tableData.value = res.data;
+  });
+};
 onMounted(() => {
   getAdminList();
+  getAdminListLength();
+  getFirstPageList();
 });
 </script>
 

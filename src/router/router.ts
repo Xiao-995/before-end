@@ -74,6 +74,10 @@ export const constantRoute = [
         name: "user_manage",
         component: () => import('../layout/index.vue'),
         redirect: '/product',
+        meta: {
+            title: '用户管理',
+            icon: 'Avatar'
+        },
         children: [
             {
                 path: '/product',
@@ -90,7 +94,7 @@ export const constantRoute = [
                 component: () => import('../views/user_manage/message/index.vue'),
                 meta: {
                     title: '消息管理',
-                    icon: 'Document'
+                    icon: 'Message'
                 }
             },
             {
@@ -99,7 +103,7 @@ export const constantRoute = [
                 component: () => import('../views/user_manage/user/index.vue'),
                 meta: {
                     title: '用户管理',
-                    icon: 'Document'
+                    icon: 'User'
                 }
             },
             {
@@ -108,7 +112,7 @@ export const constantRoute = [
                 component: () => import('../views/user_manage/userlist/index.vue'),
                 meta: {
                     title: '用户列表',
-                    icon: 'Document'
+                    icon: 'List'
                 }
             },
         ]

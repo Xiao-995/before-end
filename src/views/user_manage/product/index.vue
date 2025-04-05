@@ -4,10 +4,11 @@
       <div class="table-header">
         <div class="search">
           <el-input
-            v-model="search"
+            v-model="searchAccount"
             style="width: 240px"
             placeholder="输入账号进行搜索"
             :suffix-icon="Search"
+            @change="searchAdmin"
           />
         </div>
         <div class="button">
@@ -21,6 +22,7 @@
           <el-table-column label="序号" type="index" width="100px" />
           <el-table-column prop="account" label="账号" />
           <el-table-column prop="name" label="姓名" />
+          <el-table-column prop="sex" label="性别" />
           <el-table-column prop="department" label="部门" />
           <el-table-column prop="email" label="邮箱" />
           <el-table-column label="操作">
@@ -47,10 +49,14 @@
 <script setup lang="ts">
 import { Search } from "@element-plus/icons-vue";
 import CreateAdmin from "../components/create_admin.vue";
-import { getAdminListAPI, deleteUserAPI } from "../../../api/userinfo";
+import {
+  getAdminListAPI,
+  deleteUserAPI,
+  searchUserAPI,
+} from "../../../api/userinfo";
 import { ref, onMounted, reactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-const search = ref();
+const searchAccount = ref();
 const CreateAdminRef = ref();
 const tableData = ref([]);
 interface formData {
@@ -101,6 +107,17 @@ const deleteAdmin = (row: any) => {
       getAdminList();
     });
   });
+};
+
+// 搜索用户
+const searchAdmin = () => {
+  if (searchAccount.value == "") {
+    getAdminList();
+  } else {
+    searchUserAPI(searchAccount.value).then((res) => {
+      tableData.value = res.data;
+    });
+  }
 };
 onMounted(() => {
   getAdminList();

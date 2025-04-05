@@ -208,3 +208,26 @@ export const deleteUserAPI = (id: string, account: string) => {
         }
     })
 }
+
+// 获取总人数
+export const getAdminListLengthAPI = (identity: string) => {
+    return instance({
+        url: "/api/user/getAdminListLength",
+        method: "POST",
+        data: {
+            identity
+        }
+    })
+}
+
+// 返回详情
+export const getListDataAPI = (pager: number, identity: string) => {
+    return instance({
+        url: "/api/user/getListData",
+        method: "POST",
+        data: {
+            pager,
+            identity
+        }
+    })
+}

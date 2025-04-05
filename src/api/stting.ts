@@ -72,6 +72,29 @@ export const getCompanyAllAPI = () => {
 }
 
 
+/**
+ * 部门设置
+ */
+export const setDepartmentAPI = (set_value: string) => {
+    return instance({
+        url: '/api/user/setDepartment',
+        method: "post",
+        data: {
+            set_value
+        }
+    })
+}
+
+/**
+ * 获取部门
+ */
+export const getDepartmentAPI = () => {
+    return instance({
+        url: '/api/user/getDepartment',
+    })
+}
+
+
 
 
 

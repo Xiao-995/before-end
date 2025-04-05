@@ -22,22 +22,28 @@
         </el-form-item>
         <el-form-item label="部门" prop="department">
           <el-select v-model="FormData.department" placeholder="请选择部门">
-            <el-option label="总裁办" value="总裁办"></el-option>
-            <el-option label="项目部" value="项目部"></el-option>
+            <el-option
+              v-for="(item, index) in departmentData"
+              :key="index"
+              :label="item"
+              :value="item"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-form>
     </div>
     <template #footer>
       <el-button type="primary" @click="saveAdmin">保存</el-button>
-      <el-button>取消</el-button>
+      <el-button @click="cancel">取消</el-button>
     </template>
   </el-dialog>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { createAdminAPI, editAdminAPI } from "../../../api/userinfo";
+import { getDepartmentAPI } from "../../../api/stting";
+
 import { ElMessage } from "element-plus";
 const $emit = defineEmits(["getAdminList"]);
 const dialogFormVisible = ref(false);
@@ -105,9 +111,22 @@ const saveAdmin = () => {
   }
   $emit("getAdminList");
 };
-
+// 获取部门
+const departmentData = ref([]);
+const getDepartment = () => {
+  getDepartmentAPI().then((res) => {
+    departmentData.value = res.data;
+  });
+};
+// 取消
+const cancel = () => {
+  dialogFormVisible.value = false; // 弹窗
+};
 defineExpose({
   openDialog,
+});
+onMounted(() => {
+  getDepartment();
 });
 </script>
 
